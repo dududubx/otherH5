@@ -1,7 +1,7 @@
 <template>
   <div class="success">
     <div class="goods_title">
-      <div class="back_title" >
+      <div class="back_title">
         <div class="arrow" @click="goBack">
           <img src="../../assets/images/arrow.svg" />
         </div>
@@ -54,8 +54,8 @@
                 <div class="yugujia_price">
                   {{
                     isFloat(Number(orederData?.productBack_price))
-                      ? '￥' + orederData?.productBack_price
-                      : '￥' + orederData?.productBack_price + ".00"
+                      ? "￥" + orederData?.productBack_price
+                      : "￥" + orederData?.productBack_price + ".00"
                   }}
                 </div>
               </div>
@@ -77,21 +77,44 @@
           </div>
           <div class="count_bottom">
             实付款
-            <span class="count_bottom-num">￥<span class="num_blod">{{
-              isFloat(
-                Number(orederData?.productCurrent_price) * orederData?.count
-              )
-                ? Number(orederData?.productCurrent_price) *
-                orederData?.count
-                : Number(orederData?.productCurrent_price) *
-                orederData?.count +
-                ".00"
-            }}</span></span>
+            <span class="count_bottom-num"
+              >￥<span class="num_blod">{{
+                isFloat(
+                  Number(orederData?.productCurrent_price) * orederData?.count
+                )
+                  ? Number(orederData?.productCurrent_price) * orederData?.count
+                  : Number(orederData?.productCurrent_price) *
+                      orederData?.count +
+                    ".00"
+              }}</span></span
+            >
           </div>
         </div>
       </div>
       <div class="goods_order goods_box">
+        <div class="phone_input">
+          <van-field
+            v-model="phoneText"
+            :type="'tel'"
+            placeholder="请输入手机号"
+            autocomplete="off"
+          />
+          <van-button round type="primary" class="exchange_btn"
+            >获取手机号</van-button
+          >
+        </div>
+        <!-- <div class="tip_text">
+          请前往APP获取验证码
+        </div> -->
         <div class="order_num">
+          <div class="left_name">验证码</div>
+          <div class="right_info">
+            <!-- {{ orederData?.productName }} -->
+            <div class="num_code">55662</div>
+            <div class="opear copy-btn">复制</div>
+          </div>
+        </div>
+        <!-- <div class="order_num">
           <div class="left_name">订单编号</div>
           <div class="right_info">
             <div class="num_code">{{ orederData?.orders }}</div>
@@ -142,13 +165,17 @@
         <div class="order_num" v-if="orederData?.order_status == 1 || orederData?.order_status == 3">
           <div class="left_name">完成时间</div>
           <div class="right_info">{{ orederData?.finish_time }}</div>
-        </div>
+        </div> -->
       </div>
       <!-- <div class="goods_postscript"></div> -->
     </div>
   </div>
   <div class="gif_img success_img"></div>
-  <loadingComp :loading="showLoading" :loading-text="loadingText" v-model:src="src"></loadingComp>
+  <loadingComp
+    :loading="showLoading"
+    :loading-text="loadingText"
+    v-model:src="src"
+  ></loadingComp>
 </template>
 
 <script setup lang="ts">
@@ -170,6 +197,7 @@ const resultData = ref();
 const orederData = ref();
 const showLoading = ref(false);
 const loadingText = ref("加载中....");
+const phoneText = ref("");
 const imgSrc = ref(
   new URL("../../assets/images/naozhong.svg", import.meta.url).href
 );
@@ -247,8 +275,8 @@ let timer = null;
 const goBack = () => {
   // router.back()
   // history.back()
-  console.log(history.state, 'bock')
-  closeToast()
+  console.log(history.state, "bock");
+  closeToast();
   router.push({
     path: "/",
     query: {
@@ -293,8 +321,8 @@ const ClickJiaji = () => {
           }
         })
         .catch();
-    }
-    throttle(request)
+    };
+    throttle(request);
   }
 };
 const loadDetails = () => {
@@ -419,6 +447,7 @@ const loadDetails = () => {
   // }, 20000);
 };
 onMounted(() => {
+  document.body.classList.add('bg-yourColor');
   copyCode();
   // showLoading.value = true;
   if (localStorage.getItem("ordersData")) {
@@ -449,9 +478,9 @@ onMounted(() => {
           message: res.msg,
           duration: 200,
         });
-        setTimeout(() => {
-          goBack();
-        }, 250);
+        // setTimeout(() => {
+        //   goBack();
+        // }, 250);
         // switch (res.code) {
         //   case -1:
         //     showToast({
@@ -482,8 +511,11 @@ onMounted(() => {
     });
 });
 onUnmounted(() => {
+  document.body.style.backgroundColor = '#F2F2F2';
   clearInterval(timer);
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
