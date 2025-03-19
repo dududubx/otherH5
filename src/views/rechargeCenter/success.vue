@@ -106,13 +106,13 @@
         <!-- <div class="tip_text">
           请前往APP获取验证码
         </div> -->
-        <div class="order_num">
-          <div class="left_name">验证码</div>
-          <div class="right_info">
-            <!-- {{ orederData?.productName }} -->
-            <div class="num_code">55662</div>
-            <div class="opear copy-btn">复制</div>
-          </div>
+        <div class="phone_input" style="margin-top: 10px;">
+          <van-field
+            label="验证码:"
+            v-model="codeText"
+            :type="'text'"
+            autocomplete="off"
+          />
         </div>
         <!-- <div class="order_num">
           <div class="left_name">订单编号</div>
@@ -198,6 +198,7 @@ const orederData = ref();
 const showLoading = ref(false);
 const loadingText = ref("加载中....");
 const phoneText = ref("");
+const codeText = ref('50000')
 const imgSrc = ref(
   new URL("../../assets/images/naozhong.svg", import.meta.url).href
 );
